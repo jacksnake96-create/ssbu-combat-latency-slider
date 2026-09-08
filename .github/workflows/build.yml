@@ -1,0 +1,23 @@
+name: Build Plugin
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-skyline-switch
+      - name: Cargo Build
+        run: cargo build --release --target aarch64-skyline-switch
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: skyline-plugin-4F
+          path: target/aarch64-skyline-switch/release/*.nro
