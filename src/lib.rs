@@ -26,7 +26,7 @@ static CURRENT_LATENCY: u8 = 1;
 #[cfg(feature = "2f")]
 static CURRENT_LATENCY: u8 = 2;
 #[cfg(feature = "3f")]
-static CURRENT_LATENCY: u8 = 3;
+static CURRENT_LATENCY: u8 = 4;
 
 #[cfg(not(feature = "fixed"))]
 static mut CURRENT_LATENCY: u8 = config::DEFAULT_LATENCY;
@@ -44,7 +44,7 @@ static HID_READY: AtomicBool = AtomicBool::new(false);
 /// Npad slots to read. Online never has more than two local controllers, so sweeping all nine that
 /// `combined_buttons` walks is wasted work
 #[cfg(not(feature = "fixed"))]
-const SCANNED_PADS: [u32; 3] = [0, 1, 0x20];
+const SCANNED_PADS: [u32; 4] = [0, 1, 0x20];
 
 #[cfg(not(feature = "fixed"))]
 unsafe fn pressed_buttons() -> ninput::Buttons {
@@ -69,7 +69,7 @@ unsafe fn handle_user_input() {
     } else if pressed.contains(ninput::Buttons::RIGHT) {
         CURRENT_LATENCY = 2;
     } else if pressed.contains(ninput::Buttons::DOWN) {
-        CURRENT_LATENCY = 3;
+        CURRENT_LATENCY = 4;
     }
 
     if CURRENT_LATENCY == previous {
